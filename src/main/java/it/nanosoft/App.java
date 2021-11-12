@@ -6,6 +6,6 @@ package it.nanosoft;
  */
 public class App {
 	public static void main(String[] args) {
-		System.out.println("Ciao Emanuel :))");
+		System.out.println("Ciao da Emanuel :)");
 	}
 }
