@@ -5,26 +5,30 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
-
 
 	public class PostgreSqlConnection {
 
 	    private static PostgreSqlConnection instance;
-	    private Connection connection;
+	    private static Connection connection = null;
 	    String host = null;
 		String username = null;
 		String password = null;
 		String driver = null;
 		
    
-	    
-	    private PostgreSqlConnection() throws SQLException {
+		//Creating method to open the connection with database
+	    private PostgreSqlConnection() {
+			//Using try catch structure to treat any SQL Exceptions	
 	        try {
 	    		Properties prop = new Properties();
+	    		//Retrieving auth info from cfg file
 			    File targetFile = new File("/Users/emicovi/Documents/workspace/nanosoft_MechAdvisor/src/main/resources/mydb.cfg");
 			    try {
+					//Loading properties in an object props
 					prop.load(new java.io.FileInputStream(targetFile));
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -38,15 +42,41 @@ import java.util.Properties;
 				driver = prop.getProperty("driver").toString();
 
 	            Class.forName("org.postgresql.Driver");
-	            this.connection = DriverManager.getConnection(host, username, password);
+	            
+	            /*Initializing connection through DriverManager
+				  with url and user/password props passed as 
+				  getConnection parameters
+				 */
+	            connection = DriverManager.getConnection(host, username, password);
 	        } catch (ClassNotFoundException ex) {
 	            System.out.println("Database Connection Creation Failed : " + ex.getMessage());
 	        }
+	        catch(SQLException e) {
+				/*Throwing custom DBException (which extends RuntimeException
+				  in order to avoid compilation interruptions (excessive try catches)*/ 
+				throw new DBException(e.getMessage());
+			}
 	    }
 
 	    public Connection getConnection() {
 	        return connection;
 	    }
+	    
+	    public static void closeConnection() {
+			//Testing whether connection is null in order to close it
+			if(connection != null) {
+				//Using try catch structure to treat any SQL Exceptions	
+				try {
+					connection.close();
+				}
+				catch (SQLException e) {
+				/*Throwing custom DBException (which extends RuntimeException
+			  	  in order to avoid compilation interruptions (excessive try catches)*/ 				
+				throw new DBException(e.getMessage());	
+				}
+				}
+		}
+	    
 
 	    public static PostgreSqlConnection getInstance() throws SQLException {
 	        if (instance == null) {
@@ -57,5 +87,50 @@ import java.util.Properties;
 
 	        return instance;
 	    }
-	
+	    
+	    
+	    
+	    
+/*		=============== 
+        CLOSING METHODS
+        ===============
+*/
+
+/*Specific methods for closing Statement and ResultSet resources in order to
+* avoid multiple try catches at MainProgram through reuse and delegation,
+* once the specific methods will treat the exceptions with a try catch 
+* structure and throw a DBException in case anything occurs, which comes in
+* handy since DBException extends RuntimeException, and will not disturb the
+* code with multiple compilation requests
+*/
+public static void closeStatement(Statement pst) {
+	if (pst != null) {
+		try {
+			pst.close();
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}
+	}
+}
+
+public static void closeResultSet(ResultSet rs) {
+	if (rs != null) {
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}
+	}
+}
+
+public static void closeConnection(Connection con) {
+	if (con != null) {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}
+	}
+}
+
 }
