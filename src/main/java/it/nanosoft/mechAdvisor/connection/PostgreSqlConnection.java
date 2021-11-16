@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class PostgreSqlConnection {
-
+	private final static String CONNECTION_PROPRTIES = "C:\\Users\\Utente\\Documents\\nanosoft_workspace_bis\\mech-advisor\\src\\main\\resources\\connection.properties.txt";
 	private static PostgreSqlConnection instance;
 	private Connection connection;
 	String host = null;
@@ -17,10 +17,10 @@ public class PostgreSqlConnection {
 	String password = null;
 	String driver = null;
 
-	public PostgreSqlConnection() throws SQLException {
+	private PostgreSqlConnection() throws SQLException {
 		try {
 			Properties prop = new Properties();
-			File targetFile = new File("C:\\Users\\Utente\\Documents\\nanosoft_workspace_bis\\mech-advisor\\src\\main\\resources\\mydb");
+			File targetFile = new File(CONNECTION_PROPRTIES);
 			try {
 				prop.load(new java.io.FileInputStream(targetFile));
 			} catch (FileNotFoundException e) {
@@ -46,14 +46,21 @@ public class PostgreSqlConnection {
 		return connection;
 	}
 
+	public void closeConnection() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public static PostgreSqlConnection getInstance() throws SQLException {
 		if (instance == null) {
 			instance = new PostgreSqlConnection();
 		} else if (instance.getConnection().isClosed()) {
 			instance = new PostgreSqlConnection();
 		}
-
 		return instance;
 	}
-
 }

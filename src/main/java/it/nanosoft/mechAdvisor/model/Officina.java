@@ -1,7 +1,6 @@
 package it.nanosoft.mechAdvisor.model;
 
 public class Officina {
-	
 	private String nome;
 
 	public Officina(String nome) {
@@ -13,5 +12,4 @@ public class Officina {
 	public String toString() {
 		return "Officina = " + nome;
 	}
-	
 }

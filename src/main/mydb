@@ -1,4 +1,0 @@
-host=jdbc:postgresql://35.180.170.147:5432/postgres?currentSchema=mech-advisor-2
-username=postgres
-password=!2020!pg
-driver=org.postgresql.Driver

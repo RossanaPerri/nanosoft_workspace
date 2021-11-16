@@ -3,7 +3,6 @@ package it.nanosoft.mechAdvisor.model;
 public class Utente {
 	private String nome;
 	private String cognome;
-//	private String email;
 	
 	public Utente(String nome, String cognome) {
 		super();
