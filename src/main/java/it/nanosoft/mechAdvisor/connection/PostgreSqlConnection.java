@@ -1,15 +1,11 @@
 package it.nanosoft.mechAdvisor.connection;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class PostgreSqlConnection {
-	private final static String CONNECTION_PROPRTIES = "C:\\Users\\Utente\\Documents\\nanosoft_workspace_bis\\mech-advisor\\src\\main\\resources\\connection.properties.txt";
 	private static PostgreSqlConnection instance;
 	private Connection connection;
 	String host = null;

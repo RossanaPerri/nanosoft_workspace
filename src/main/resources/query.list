@@ -1,0 +1,13 @@
+query1=select a.nome, a.cognome, u.email from mech.utente as u, mech.anagrafica as a, mech.propieta_veicolo as pv, mech.veicolo as v where a.email_utente = u.email and pv.email_utente = u.email and pv.id_veicolo = v.id and pv.tipologia_veicolo = v.tipologia and pv.data_fine_prop <= '2019-11-11' and v.marca = 'audi'
+
+query2=select o.nome from mech.officina o where votomedio notnull order by votomedio desc limit 10
+
+query3=select a.nome, a.cognome FROM mech.utente u, mech.anagrafica a, mech.officina o, mech.tipologia_officina to2, mech.tipologia t, mech.servizio s, mech.commento c WHERE u.email = a.email_utente and a.provincia = 'Catanzaro' and o.email_utente = u.email and to2.id_officina = o.id and t.tipo_officina = 'Gommista' and s.nome = to2.tipo_officina_tipoligia and u.email = c.email_utente
+
+query4=select a.nome, a.cognome from mech.utente u, mech.officina o, mech.inclusione i, mech.gruppo g, mech.anagrafica a where u.email = o.email_utente and u.email = i.email_utente and g.id = i.id_gruppo and u.email = a.email_utente and g.descrizione = 'meccanico' and o.votomedio >= 6
+
+query5=select u.email, a.nome, a.cognome from mech.utente u, mech.anagrafica a, mech.recensioni r, mech.voto v, mech.gruppo g, mech.inclusione i where r.email_utente = u.email and u.email = a.email_utente and r.id_voto = v.id and u.email = i.email_utente and g.id = i.id_gruppo and g.descrizione = 'admin' and v.voto >= 6
+
+query6=select a.nome, a.cognome, count(*) as c from mech.utente u, mech.anagrafica a, mech.recensioni r, mech.voto v where r.email_utente = u.email and u.email = a.email_utente and r.id_voto = v.id and v.voto < 6 group by a.nome, a.cognome, u.email order by c desc limit 2
+
+query7=select distinct a.nome, a.cognome from mech.utente u, mech.propieta_veicolo pv, mech.veicolo v, mech.voto v2, mech.officina o, mech.recensioni r, mech.anagrafica a where u.email =  a.email_utente and o.email_utente = u.email and u.email = pv.email_utente and pv.id_veicolo = v.id and r.email_utente = u.email and r.id_veicolo = v.id and r.id_voto = v2.id and v2.voto < 6 and o.provincia = 'Cosenza' and v.tipologia = 'moto'
