@@ -20,24 +20,17 @@ public class PostgreSqlConnection {
 	private PostgreSqlConnection() throws SQLException {
 		try {
 			Properties prop = new Properties();
-			File targetFile = new File(CONNECTION_PROPRTIES);
-			try {
-				prop.load(new java.io.FileInputStream(targetFile));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			prop.load(PostgreSqlConnection.class.getClassLoader().getResourceAsStream("connection.properties"));
 
 			host = prop.getProperty("host").toString();
 			username = prop.getProperty("username").toString();
 			password = prop.getProperty("password").toString();
 			driver = prop.getProperty("driver").toString();
 
-			Class.forName("org.postgresql.Driver");
+			Class.forName(driver);
 			this.connection = DriverManager.getConnection(host, username, password);
 			System.out.println("Connessione Riuscita!");
-		} catch (ClassNotFoundException ex) {
+		} catch (Exception ex) {
 			System.out.println("Database Connection Creation Failed : " + ex.getMessage());
 		}
 	}
