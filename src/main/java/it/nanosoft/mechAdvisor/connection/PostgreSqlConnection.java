@@ -25,12 +25,11 @@ import java.util.Properties;
 			//Using try catch structure to treat any SQL Exceptions	
 	        try {
 	    		Properties prop = new Properties();
-	    		//Retrieving auth info from cfg file
-			    File targetFile = new File("/Users/emicovi/Documents/workspace/nanosoft_MechAdvisor/src/main/resources/mydb.cfg");
+	    		//Retrieving auth info
 			    try {
-					//Loading properties in an object props
-					prop.load(new java.io.FileInputStream(targetFile));
-				} catch (FileNotFoundException e) {
+					//Loading properties
+			    	prop.load(PostgreSqlConnection.class.getClassLoader().getResourceAsStream("connection.properties"));
+			    	} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();
