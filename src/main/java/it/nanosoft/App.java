@@ -2,6 +2,7 @@ package it.nanosoft;
 
 import java.io.IOException;
 import java.util.Properties;
+
 import it.nanosoft.mechAdvisor.queryService.QueryMaker;
 import it.nanosoft.mechAdvisor.queryService.QueryMaker.QueryOutput;
 
@@ -11,11 +12,7 @@ import it.nanosoft.mechAdvisor.queryService.QueryMaker.QueryOutput;
  *
  */
 public class App {
-	
-	public static void load() throws IOException {
-		
 
-	}
 	public static void main(String[] args)  {
 		
 		QueryMaker qm;
@@ -25,7 +22,6 @@ public class App {
 		try {
 			prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("1) Tutti gli utenti che hanno cambiato auto negli ultimi 2 anni la cui auto primaria era un AUDI");
@@ -48,7 +44,7 @@ public class App {
 		queryOutput = QueryOutput.UTENTE;
 		qm = new QueryMaker(query4, queryOutput);
 		
-		System.out.println("5) Gli utenti di tipo admin che sono anche utenti dell'applicazione che hanno lasciato\n"
+		System.out.println("5) Gli utenti di tipo admin che sono anche utenti dell'applicazione che hanno lasciato "
 				+ "almeno una recensione positiva ( il cui valore è >=6 )");
 		String query5 = prop.getProperty("query5").toString();
 		queryOutput = QueryOutput.UTENTE;
@@ -59,11 +55,13 @@ public class App {
 		queryOutput = QueryOutput.UTENTE;
 		qm = new QueryMaker(query6, queryOutput);
 		
-		System.out.println("7) Tutti gli utenti che in possesso di un motorino che hanno lasciato almeno\n"
+		System.out.println("7) Tutti gli utenti che in possesso di un motorino che hanno lasciato almeno "
 				+ "una recensione negativa nella provincia di CS");
 		String query7 = prop.getProperty("query7").toString();
 		queryOutput = QueryOutput.UTENTE;
 		qm = new QueryMaker(query7, queryOutput);
+		
+		qm.closeMaker();
 	}
 }
 
