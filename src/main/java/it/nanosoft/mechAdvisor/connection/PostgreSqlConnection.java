@@ -5,20 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public final class PostgreSqlConnection {
+import org.slf4j.Logger;
+
+import it.nanosoft.mechAdvisor.service.Loggable;
+
+public final class PostgreSqlConnection implements Loggable {
 	private static PostgreSqlConnection instance;
 	private Connection connection;
 	String host = null;
 	String username = null;
 	String password = null;
 	String driver = null;
-	
-	/**
-	 * Costruttore privato che crea una connessione con DBpostgres
-	 * inizializza le variabili di classe con dati configurazione letti da pathclass 
-	 */
 
-	private PostgreSqlConnection() throws SQLException {
+	/**
+	 * Costruttore privato che crea una connessione con DBpostgres inizializza le
+	 * variabili di classe con dati configurazione letti da pathclass
+	 */
+	private PostgreSqlConnection() {
 		try {
 			Properties prop = new Properties();
 			prop.load(PostgreSqlConnection.class.getClassLoader().getResourceAsStream("connection.properties"));
@@ -30,40 +33,52 @@ public final class PostgreSqlConnection {
 
 			Class.forName(driver);
 			this.connection = DriverManager.getConnection(host, username, password);
-			System.out.println("---- Successful database connection creation ---- \n");
+			newloggerApp.info("---- Successful database connection creation ---- \n");
 		} catch (Exception ex) {
-			System.out.println("---- Database Connection Creation Failed : " + ex.getMessage() + " ---- \n");
+			newloggerApp.error("---- Database Connection Creation Failed : " + ex.getMessage() + " ---- \n");
 		}
 	}
 
 	public Connection getConnection() {
 		return connection;
 	}
-	
+
 	/**
 	 * Chiude la connessione
 	 */
-
 	public void closeConnection() {
 		try {
 			connection.close();
-			System.out.println("---- Connection closed ---- \n");
-		} catch (SQLException e) {
-			System.out.println("---- Connection closing error : " + e.getMessage() + " ---- \n");
+			newloggerApp.info("---- Connection closed ---- \n");
+		} catch (Exception e) {
+			newloggerApp.error("---- Connection closing error : " + e.getMessage() + " ---- \n");
 		}
 	}
+
 	/**
-	 * Verifica se la connessione è stata già creata, altrimenti ne crea una nuova  
-	 * In questo modo l'istanza viene create al primo tentativo di utilizzo e 
-	 * nelle successive chiamate viene restituito il riferimento alla classe istanziata.
+	 * Verifica se la connessione è stata già creata, altrimenti ne crea una nuova
+	 * In questo modo l'istanza viene create al primo tentativo di utilizzo e nelle
+	 * successive chiamate viene restituito il riferimento alla classe istanziata.
+	 * 
 	 * @throws SQLException
 	 */
-	public static PostgreSqlConnection getInstance() throws SQLException {
+	public static PostgreSqlConnection getInstance() {
 		if (instance == null) {
 			instance = new PostgreSqlConnection();
-		} else if (instance.getConnection().isClosed()) {
-			instance = new PostgreSqlConnection();
-		}
+		} else
+			try {
+				if (instance.getConnection().isClosed()) {
+					instance = new PostgreSqlConnection();
+				}
+			} catch (SQLException e) {
+				newloggerApp.error(e.getMessage());
+			}
 		return instance;
+	}
+
+	@Override
+	public Logger logging() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
