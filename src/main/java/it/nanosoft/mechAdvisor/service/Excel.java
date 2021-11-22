@@ -47,9 +47,14 @@ public class Excel {
 			}catch (Exception e) {
 				e.getMessage();
 			}
+			
+	        File f = new File(System.getProperty("user.home").concat(System.getProperty("file.separator")).concat("query.xlsx"));
+
 				
-				try(FileOutputStream fos = new FileOutputStream ("demo.xlsx")) {
-					book. write (fos);
+				try(FileOutputStream fos = new FileOutputStream (f))
+				
+{
+					book.write (fos);
 					}
 			
 			
