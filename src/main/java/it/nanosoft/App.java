@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import it.nanosoft.mechAdvisor.menu.GenericMenu;
 import it.nanosoft.mechAdvisor.service.Loggable;
 import it.nanosoft.mechAdvisor.service.QueryMaker;
-import it.nanosoft.mechAdvisor.service.QueryMaker.QueryOutput;
 
 /**
  * Questa è la classe principale che serve per avviare il programma.
@@ -30,7 +29,6 @@ public class App implements Loggable {
 				newloggerApp.info("Eseguo la prima query");
 				newloggerApp.info("------Risultato-------");
 
-				QueryOutput queryOutput;
 
 				Properties prop = new Properties();
 				try {
@@ -45,8 +43,7 @@ public class App implements Loggable {
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
 				}
-				queryOutput = QueryOutput.UTENTE;
-				new QueryMaker(query, queryOutput);
+				new QueryMaker(query, "query1");
 			}
 		});
 
@@ -58,7 +55,6 @@ public class App implements Loggable {
 				newloggerApp.info("Eseguo la seconda query");
 				newloggerApp.info("------Risultato-------");
 
-				QueryOutput queryOutput;
 
 				Properties prop = new Properties();
 				try {
@@ -73,8 +69,7 @@ public class App implements Loggable {
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
 				}
-				queryOutput = QueryOutput.OFFICINA;
-				new QueryMaker(query, queryOutput);
+				new QueryMaker(query, "query2");
 			}
 		});
 
@@ -85,8 +80,6 @@ public class App implements Loggable {
 				String query = null;
 				newloggerApp.info("Eseguo la terza query");
 				newloggerApp.info("------Risultato-------");
-
-				QueryOutput queryOutput;
 
 				Properties prop = new Properties();
 				try {
@@ -101,8 +94,7 @@ public class App implements Loggable {
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
 				}
-				queryOutput = QueryOutput.UTENTE;
-				new QueryMaker(query, queryOutput);
+				new QueryMaker(query, "query3");
 			}
 		});
 		// Add another menu item using a Runnable.
@@ -113,7 +105,6 @@ public class App implements Loggable {
 				newloggerApp.info("Eseguo la quarta query");
 				newloggerApp.info("------Risultato-------");
 
-				QueryOutput queryOutput;
 
 				Properties prop = new Properties();
 				try {
@@ -128,8 +119,7 @@ public class App implements Loggable {
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
 				}
-				queryOutput = QueryOutput.UTENTE;
-				new QueryMaker(query, queryOutput);
+				new QueryMaker(query, "query4");
 			}
 		});
 
@@ -140,8 +130,6 @@ public class App implements Loggable {
 				String query = null;
 				newloggerApp.info("Eseguo la quinta query");
 				newloggerApp.info("------Risultato-------");
-
-				QueryOutput queryOutput;
 
 				Properties prop = new Properties();
 				try {
@@ -156,8 +144,7 @@ public class App implements Loggable {
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
 				}
-				queryOutput = QueryOutput.UTENTE;
-				new QueryMaker(query, queryOutput);
+				new QueryMaker(query, "query5");
 			}
 		});
 		// Add another menu item using a Runnable.
@@ -166,8 +153,6 @@ public class App implements Loggable {
 				String query = null;
 				newloggerApp.info("Eseguo la sesta query");
 				newloggerApp.info("------Risultato-------");
-
-				QueryOutput queryOutput;
 
 				Properties prop = new Properties();
 				try {
@@ -182,8 +167,7 @@ public class App implements Loggable {
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
 				}
-				queryOutput = QueryOutput.UTENTE;
-				new QueryMaker(query, queryOutput);
+				new QueryMaker(query, "query6");
 			}
 		});
 
@@ -193,8 +177,6 @@ public class App implements Loggable {
 				String query = null;
 				newloggerApp.info("Eseguo la settima query");
 				newloggerApp.info("------Risultato-------");
-
-				QueryOutput queryOutput;
 
 				Properties prop = new Properties();
 				try {
@@ -209,8 +191,7 @@ public class App implements Loggable {
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
 				}
-				queryOutput = QueryOutput.UTENTE;
-				new QueryMaker(query, queryOutput);
+				new QueryMaker(query, "query7");
 			}
 		});
 		// Finally initalize the menu

@@ -1,5 +1,7 @@
 package it.nanosoft.mechAdvisor.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,12 +18,12 @@ import it.nanosoft.mechAdvisor.connection.PostgreSqlConnection;
 
 public class QueryMaker implements Loggable {
 
-	public enum QueryOutput {UTENTE, OFFICINA}
-
 	private PostgreSqlConnection conn = null;
 	
+	private Excel excel = new Excel();
 	
-	public QueryMaker(String query, QueryOutput queryOutput) {
+	
+	public QueryMaker(String query, String nq) {
 		try {
 			ResultSet rs = null;
 			conn = PostgreSqlConnection.getInstance();
@@ -31,38 +33,18 @@ public class QueryMaker implements Loggable {
 				newloggerApp.error(e.getMessage());
 			}
 			if(rs!=null)
-			stampaRisultatoQuery(rs, queryOutput);
+			 excel.toExcel(rs, nq);
 		} catch (SQLException e) {
 			newloggerApp.error("Errore !" + e.getMessage());
+		} catch (FileNotFoundException e) {
+			newloggerApp.error(e.getMessage());
+		} catch (IOException e) {
+			newloggerApp.error(e.getMessage());
 		} finally {
 			PostgreSqlConnection.closeConnection();
 		}
 	}
-	private void stampaRisultatoQuery(ResultSet rs, QueryOutput queryOutput) {
-		switch (queryOutput) {
-		case UTENTE:
-			try {
-				while (rs.next()) {
-					newloggerApp.info(rs.getString("nome") +" "+ rs.getString("cognome"));
-				}
-			} catch (SQLException e) {
-				newloggerApp.error(e.getMessage());
-			}
-			break;
-		case OFFICINA:
-			try {
-				while (rs.next()) {
-					newloggerApp.info(rs.getString("nome"));
-				}
-			} catch (SQLException e) {
-				newloggerApp.error(e.getMessage());
-			}
-			break;
-		default:
-			newloggerApp.error("Query non trovata!");;
-		}
-		System.out.println();
-	}
+	
 	@Override
 	public Logger logging() {
 		// TODO Auto-generated method stub
