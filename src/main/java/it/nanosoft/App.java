@@ -1,16 +1,17 @@
 package it.nanosoft;
-
-import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 
 import it.nanosoft.mechAdvisor.menu.GenericMenu;
+import it.nanosoft.mechAdvisor.model.Utente;
 import it.nanosoft.mechAdvisor.service.Loggable;
 import it.nanosoft.mechAdvisor.service.QueryMaker;
+import it.nanosoft.mechAdvisor.service.ReportMaker;
 
 /**
- * Questa è la classe principale che serve per avviare il programma.
+ * Questa è la classe principale che serve per avviare il programma. Utilizza la classe del Menù
  *
  * @author emicovi
  *
@@ -20,180 +21,55 @@ public class App implements Loggable {
 	public static void main(String[] args) {
 
 		GenericMenu genericMenu = new GenericMenu();
+		
+		
 
 		// Add another menu item using a Runnable.
 		genericMenu.addMenuItem("1", "Esequi la prima query", new Runnable() {
 			public void run() {
 				String query = null;
-
-				newloggerApp.info("Eseguo la prima query");
-				newloggerApp.info("------Risultato-------");
-
-
 				Properties prop = new Properties();
 				try {
-					newloggerApp.info("Carico il file delle query");
 					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-				} catch (IOException e) {
-					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-				}
-				try {
 					query = prop.getProperty("query1").toString();
-
+					QueryMaker qm = new QueryMaker();
+					List<Utente> userList = qm.makeQuery(query);	
+					ReportMaker rp = new ReportMaker();
+					rp.reportUtente(userList);
+					qm.closeMaker();
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
+				
 				}
-				new QueryMaker(query, "query1");
-			}
-		});
+			}});
 
-		// Add another menu item using a Runnable.
-		genericMenu.addMenuItem("2", "Esequi la seconda query", new Runnable() {
-			public void run() {
+//		// Add another menu item using a Runnable.
+//		genericMenu.addMenuItem("2", "Esequi la seconda query", new Runnable() {
+//			public void run() {
+//
+//				String query = null;
+//				newloggerApp.info("Eseguo la seconda query");
+//				newloggerApp.info("------Risultato-------");
+//
+//
+//				Properties prop = new Properties();
+//				try {
+//					newloggerApp.info("Carico il file delle query");
+//					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
+//				} catch (IOException e) {
+//					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
+//				}
+//				try {
+//					query = prop.getProperty("query2").toString();
+//
+//				} catch (Exception e) {
+//					newloggerApp.error(e.getMessage());
+//				}
+//				new QueryMaker(query, "query2");
+//			}
+//		});
 
-				String query = null;
-				newloggerApp.info("Eseguo la seconda query");
-				newloggerApp.info("------Risultato-------");
-
-
-				Properties prop = new Properties();
-				try {
-					newloggerApp.info("Carico il file delle query");
-					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-				} catch (IOException e) {
-					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-				}
-				try {
-					query = prop.getProperty("query2").toString();
-
-				} catch (Exception e) {
-					newloggerApp.error(e.getMessage());
-				}
-				new QueryMaker(query, "query2");
-			}
-		});
-
-		// Add another menu item using a Runnable.
-		genericMenu.addMenuItem("3", "Esequi la terza query", new Runnable() {
-			public void run() {
-
-				String query = null;
-				newloggerApp.info("Eseguo la terza query");
-				newloggerApp.info("------Risultato-------");
-
-				Properties prop = new Properties();
-				try {
-					newloggerApp.info("Carico il file delle query");
-					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-				} catch (IOException e) {
-					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-				}
-				try {
-					query = prop.getProperty("query3").toString();
-
-				} catch (Exception e) {
-					newloggerApp.error(e.getMessage());
-				}
-				new QueryMaker(query, "query3");
-			}
-		});
-		// Add another menu item using a Runnable.
-		genericMenu.addMenuItem("4", "Esequi la quarta query", new Runnable() {
-			public void run() {
-
-				String query = null;
-				newloggerApp.info("Eseguo la quarta query");
-				newloggerApp.info("------Risultato-------");
-
-
-				Properties prop = new Properties();
-				try {
-					newloggerApp.info("Carico il file delle query");
-					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-				} catch (IOException e) {
-					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-				}
-				try {
-					query = prop.getProperty("query4").toString();
-
-				} catch (Exception e) {
-					newloggerApp.error(e.getMessage());
-				}
-				new QueryMaker(query, "query4");
-			}
-		});
-
-		// Add another menu item using a Runnable.
-		genericMenu.addMenuItem("5", "Esequi la quinta query", new Runnable() {
-			public void run() {
-
-				String query = null;
-				newloggerApp.info("Eseguo la quinta query");
-				newloggerApp.info("------Risultato-------");
-
-				Properties prop = new Properties();
-				try {
-					newloggerApp.info("Carico il file delle query");
-					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-				} catch (IOException e) {
-					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-				}
-				try {
-					query = prop.getProperty("query5").toString();
-
-				} catch (Exception e) {
-					newloggerApp.error(e.getMessage());
-				}
-				new QueryMaker(query, "query5");
-			}
-		});
-		// Add another menu item using a Runnable.
-		genericMenu.addMenuItem("6", "Esequi la sesta query", new Runnable() {
-			public void run() {
-				String query = null;
-				newloggerApp.info("Eseguo la sesta query");
-				newloggerApp.info("------Risultato-------");
-
-				Properties prop = new Properties();
-				try {
-					newloggerApp.info("Carico il file delle query");
-					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-				} catch (IOException e) {
-					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-				}
-				try {
-					query = prop.getProperty("query6").toString();
-
-				} catch (Exception e) {
-					newloggerApp.error(e.getMessage());
-				}
-				new QueryMaker(query, "query6");
-			}
-		});
-
-		// Add another menu item using a Runnable.
-		genericMenu.addMenuItem("7", "Esequi la settima query", new Runnable() {
-			public void run() {
-				String query = null;
-				newloggerApp.info("Eseguo la settima query");
-				newloggerApp.info("------Risultato-------");
-
-				Properties prop = new Properties();
-				try {
-					newloggerApp.info("Carico il file delle query");
-					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-				} catch (IOException e) {
-					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-				}
-				try {
-					query = prop.getProperty("query7").toString();
-
-				} catch (Exception e) {
-					newloggerApp.error(e.getMessage());
-				}
-				new QueryMaker(query, "query7");
-			}
-		});
+		
 		// Finally initalize the menu
 		genericMenu.initMenu();
 
