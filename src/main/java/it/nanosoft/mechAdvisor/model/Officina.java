@@ -1,9 +1,16 @@
 package it.nanosoft.mechAdvisor.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Officina {
+	
 	private String nome;
+	
+	public Officina(ResultSet rs) throws SQLException {
+		nome = rs.getString("nome");
+	}
 
 	public Officina() {
 		super();

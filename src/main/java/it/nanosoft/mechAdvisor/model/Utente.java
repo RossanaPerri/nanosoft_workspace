@@ -1,10 +1,18 @@
 package it.nanosoft.mechAdvisor.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Utente {
+	
 	private String nome;
 	private String cognome;
+	
+	public Utente(ResultSet rs) throws SQLException {
+		nome = rs.getString("nome");
+		cognome = rs.getString("cognome");
+	}
 
 	public Utente() {
 		super();

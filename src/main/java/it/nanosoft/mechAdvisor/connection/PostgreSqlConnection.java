@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import it.nanosoft.mechAdvisor.service.Loggable;
 
 public final class PostgreSqlConnection implements Loggable {
+	
 	private static PostgreSqlConnection instance;
 	private Connection connection;
 	String host = null;
@@ -35,7 +36,7 @@ public final class PostgreSqlConnection implements Loggable {
 			this.connection = DriverManager.getConnection(host, username, password);
 			newloggerApp.info("---- Successful database connection creation ---- \n");
 		} catch (Exception ex) {
-			newloggerApp.error("---- Database Connection Creation Failed : " + ex.getMessage() + " ---- \n");
+			newloggerApp.error("---- Database Connection Creation Failed : ", ex);
 		}
 	}
 
@@ -51,7 +52,7 @@ public final class PostgreSqlConnection implements Loggable {
 			connection.close();
 			newloggerApp.info("---- Connection closed ---- \n");
 		} catch (Exception e) {
-			newloggerApp.error("---- Connection closing error : " + e.getMessage() + " ---- \n");
+			newloggerApp.error("---- Connection closing error : ", e);
 		}
 	}
 
@@ -71,14 +72,13 @@ public final class PostgreSqlConnection implements Loggable {
 					instance = new PostgreSqlConnection();
 				}
 			} catch (SQLException e) {
-				newloggerApp.error(e.getMessage());
+				newloggerApp.error("---- Database Connection Creation Failed : ", e);
 			}
 		return instance;
 	}
 
 	@Override
 	public Logger logging() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
