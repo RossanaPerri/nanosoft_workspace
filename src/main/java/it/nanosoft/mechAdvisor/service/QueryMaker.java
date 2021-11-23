@@ -31,7 +31,7 @@ public class QueryMaker implements Loggable {
 		
 	}
 	
-	public List<Utente> makeQuery(String query) {
+	public List<Utente> makeQueryUtente(String query) {
 		List<Utente> listToReturn = new ArrayList<Utente>();
 		try {
 			conn = PostgreSqlConnection.getInstance();
@@ -50,6 +50,23 @@ public class QueryMaker implements Loggable {
 	public void closeMaker() {
 		newloggerApp.info("---- Query Maker closed ----");
 	}
+	
+	public List<Officina> makeQueryOfficina(String query) {
+		List<Officina> listToReturn = new ArrayList<Officina>();
+		try {
+			conn = PostgreSqlConnection.getInstance();
+			stmt = conn.getConnection().createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Officina officinaToAdd = new Officina(rs);
+				listToReturn.add(officinaToAdd);
+			}
+		} catch (SQLException e) {
+			newloggerApp.error(" ---- : ", e);
+		}
+		return listToReturn;
+	}
+	
 
 	@Override
 	public Logger logging() {

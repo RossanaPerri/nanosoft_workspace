@@ -33,9 +33,9 @@ public class App implements Loggable {
 					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
 					query = prop.getProperty("query1").toString();
 					QueryMaker qm = new QueryMaker();
-					List<Utente> userList = qm.makeQuery(query);	
-					ReportMaker rp = new ReportMaker();
-					rp.reportUtente(userList);
+					List<Utente> userList = qm.makeQueryUtente(query);	
+					ReportMaker rm = new ReportMaker();
+					rm.createUtenteReports(userList, "reportUtente_1.xlsx");
 					qm.closeMaker();
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
@@ -43,31 +43,25 @@ public class App implements Loggable {
 				}
 			}});
 
-//		// Add another menu item using a Runnable.
-//		genericMenu.addMenuItem("2", "Esequi la seconda query", new Runnable() {
-//			public void run() {
-//
-//				String query = null;
-//				newloggerApp.info("Eseguo la seconda query");
-//				newloggerApp.info("------Risultato-------");
-//
-//
-//				Properties prop = new Properties();
-//				try {
-//					newloggerApp.info("Carico il file delle query");
-//					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-//				} catch (IOException e) {
-//					newloggerApp.error("Impossibile caricare il file delle query" + e.getMessage());
-//				}
-//				try {
-//					query = prop.getProperty("query2").toString();
-//
-//				} catch (Exception e) {
-//					newloggerApp.error(e.getMessage());
-//				}
-//				new QueryMaker(query, "query2");
-//			}
-//		});
+		// Add another menu item using a Runnable.
+		genericMenu.addMenuItem("3", "Esequi la terza query", new Runnable() {
+			public void run() {
+				String query = null;
+				Properties prop = new Properties();
+				try {
+					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
+					query = prop.getProperty("query3").toString();
+					QueryMaker qm = new QueryMaker();
+					List<Utente> userList = qm.makeQueryUtente(query);	
+					ReportMaker rm = new ReportMaker();
+					rm.createUtenteReports(userList, "reportUtente_3.xlsx");
+					qm.closeMaker();
+				} catch (Exception e) {
+					newloggerApp.error(e.getMessage());
+				
+				}
+			}});
+
 
 		
 		// Finally initalize the menu
