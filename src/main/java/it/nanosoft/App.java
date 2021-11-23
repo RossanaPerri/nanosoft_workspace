@@ -33,9 +33,9 @@ public class App implements Loggable {
 					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
 					query = prop.getProperty("query1").toString();
 					QueryMaker qm = new QueryMaker();
-					List<Utente> userList = qm.makeQuery(query);	
+					List<Utente> userList = qm.makeQueryUtente(query);	
 					ReportMaker rm = new ReportMaker();
-					rm.reportUtente(userList);
+					rm.createUtenteReports(userList, "reportUtente_1.xlsx");
 					qm.closeMaker();
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
@@ -52,9 +52,9 @@ public class App implements Loggable {
 					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
 					query = prop.getProperty("query3").toString();
 					QueryMaker qm = new QueryMaker();
-					List<Utente> userList = qm.makeQuery(query);	
+					List<Utente> userList = qm.makeQueryUtente(query);	
 					ReportMaker rm = new ReportMaker();
-					rm.reportUtente(userList);
+					rm.createUtenteReports(userList, "reportUtente_3.xlsx");
 					qm.closeMaker();
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());
