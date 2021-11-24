@@ -8,24 +8,19 @@ import java.util.Objects;
 public class Officina {
 	
 	private String nome;
+	private Double voto;
 	
+	public Double getVoto() {
+		return voto;
+	}
+
+	public void setVoto(Double voto) {
+		this.voto = voto;
+	}
+
 	public Officina(ResultSet rs) throws SQLException {
 		nome = rs.getString("nome");
-	}
-
-	public Officina() {
-		super();
-		this.nome = "";
-	}
-
-	public Officina(String nome) {
-		super();
-		this.nome = nome;
-	}
-
-	@Override
-	public String toString() {
-		return "Officina = " + nome;
+		voto = rs.getDouble("voto");
 	}
 
 	public String getNome() {
@@ -52,5 +47,18 @@ public class Officina {
 		Officina other = (Officina) obj;
 		return Objects.equals(nome, other.nome);
 	}
+
+	@Override
+	public String toString() {
+		return "Officina [nome=" + nome + ", voto=" + voto + "]";
+	}
+
+	public Officina(String nome, Double voto) {
+		super();
+		this.nome = nome;
+		this.voto = voto;
+	}
+
+	
 
 }

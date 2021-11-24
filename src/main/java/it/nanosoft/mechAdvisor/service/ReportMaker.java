@@ -1,8 +1,13 @@
 package it.nanosoft.mechAdvisor.service;
+
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,33 +17,32 @@ import org.slf4j.Logger;
 import it.nanosoft.mechAdvisor.model.Officina;
 import it.nanosoft.mechAdvisor.model.Utente;
 
-public class ReportMaker implements Loggable{
-	
-	
+public class ReportMaker implements Loggable {
+
 	public ReportMaker() {
 	}
 
 	public void createUtenteReports(List<Utente> userList, String queryName) throws SQLException {
-		
+
 		try {
 			InputStream fis = ReportMaker.class.getResourceAsStream("/reportUtenteTemplate.xlsx");
-			XSSFWorkbook wb = new XSSFWorkbook(fis);        
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sh = wb.getSheetAt(0);
 			fis.close();
-			
+
 			int rownum = 1;
 			for (Utente user : userList) {
 				Row row = sh.createRow(rownum++);
 				createListUser(user, row);
 			}
-				
-			FileOutputStream out = new FileOutputStream
-					(System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName)); // file name with path
+
+			FileOutputStream out = new FileOutputStream(
+			System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName)); 
 			wb.write(out);
 			out.close();
 			wb.close();
 		} catch (Exception e) {
-			newloggerApp.error(" ---- : ",e);
+			newloggerApp.error(" ---- : ", e);
 		}
 	}
 
@@ -51,35 +55,67 @@ public class ReportMaker implements Loggable{
 		cell.setCellValue(user.getCognome());
 	}
 
-public void createOfficinaReports(List<Officina> officinaList, String queryName) throws SQLException {
-		
+	public void createOfficinaReports(List<Officina> officinaList, String queryName) throws SQLException {
+
 		try {
 			InputStream fis = ReportMaker.class.getResourceAsStream("/reportOfficinaTemplate.xlsx");
-			XSSFWorkbook wb = new XSSFWorkbook(fis);        
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sh = wb.getSheetAt(0);
 			fis.close();
-			
-			int rownum = 1;
-			for (Officina user : officinaList) {
-				Row row = sh.createRow(rownum++);
-				createListOfficna(user, row);
-			}
+
+			List<Officina> officine = new ArrayList();
+
+			officine.addAll(officinaList);
+
+			HashSet<Object> seen = new HashSet<>();
+			officine.removeIf(e -> !seen.add(e.getNome()));
+
+			for (Officina off : officine) {
+				double voto = 0.0;
+				int count = 0;
+				double votoMedio = 0.0;
+				for (Officina off1 : officinaList) {
+					if (off.equals(off1)) {
+						voto += off1.getVoto();
+						count++;
+					}
+				}
+				if (count != 0) {
+					votoMedio = voto / count;
+				}
 				
-			FileOutputStream out = new FileOutputStream
-					(System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName)); // file name with path
+			off.setVoto(votoMedio);
+
+			}
+
+			int rownum = 1;
+			for (Officina off : officine) {
+				Row row = sh.createRow(rownum++);
+				createListOfficna(off, row);
+			}
+
+			FileOutputStream out = new FileOutputStream(
+					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName)); // file
+																														// name
+																														// with
+																														// path
 			wb.write(out);
 			out.close();
 			wb.close();
 		} catch (Exception e) {
-			newloggerApp.error(" ---- : ",e);
+			newloggerApp.error(" ---- : ", e);
 		}
 	}
 
 	// creating cells for each row
-	private static void createListOfficna(Officina user, Row row) {
+	private static void createListOfficna(Officina off, Row row) {
 		Cell cell = row.createCell(0);
-		cell.setCellValue(user.getNome());
+		cell.setCellValue(off.getNome());
+		cell = row.createCell(1);
+		cell.setCellValue(off.getVoto());
+
 	}
+
 	@Override
 	public Logger logging() {
 		return null;
