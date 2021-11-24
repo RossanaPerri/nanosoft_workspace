@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 import org.slf4j.Logger;
-
 import it.nanosoft.mechAdvisor.model.Officina;
 import it.nanosoft.mechAdvisor.model.Utente;
 import it.nanosoft.mechAdvisor.service.Loggable;
@@ -12,14 +11,20 @@ import it.nanosoft.mechAdvisor.service.QueryMaker;
 import it.nanosoft.mechAdvisor.service.ReportMaker;
 
 /**
+ * Questa è la classe principale. Avvia il programma.
  * 
- * @author Rossana Perri
+ * @author RossanaPerri
  *
  */
 public class App implements Loggable {
 
+	/**
+	 * carica le istruzioni sql dal file "query.list"
+	 * 
+	 * @return un oggetto Properties che contiente l'insieme delle chiavi il cui
+	 *         valore corrisponde all'istruzione sql da eseguire
+	 */
 	private static Properties leggiQuery() {
-		
 		Properties prop = new Properties();
 		try {
 			newloggerApp.info("Sto caricando il file query.list");
@@ -36,48 +41,50 @@ public class App implements Loggable {
 		ReportMaker rm = new ReportMaker();
 		Properties prop = leggiQuery();
 		String query = null;
-		String queryName = null;
+		String reportName = null;
 
-		newloggerApp.info("1) Tutti gli utenti che hanno cambiato auto negli ultimi 2 anni la cui auto primaria era un AUDI");
+		newloggerApp.info(
+				"1) Tutti gli utenti che hanno cambiato auto negli ultimi 2 anni la cui auto primaria era un AUDI");
 		try {
 			query = prop.getProperty("query1").toString();
 			qm = new QueryMaker();
 			List<Utente> userList = qm.makeQueryUtente(query);
-			queryName = "reportUtente_1.xlsx";
-			rm.createUtenteReports(userList, queryName);
+			reportName = "reportUtente_1.xlsx";
+			rm.createUtenteReports(userList, reportName);
 		} catch (Exception e) {
 			newloggerApp.error(" ----- : ", e);
 		}
-		
+
 		newloggerApp.info("2) Le migliori 6 officine, calcolando il voto medio di ogni officina");
 		try {
 			query = prop.getProperty("query2").toString();
 			qm = new QueryMaker();
 			List<Officina> officinaList = qm.makeQueryOfficina(query);
-			queryName = "reportOfficina_1.xlsx";
-			rm.createOfficinaReports(officinaList, queryName);
+			reportName = "reportOfficina_1.xlsx";
+			rm.createOfficinaReports(officinaList, reportName);
 		} catch (Exception e) {
 			newloggerApp.error(e.getMessage());
 		}
 
-		newloggerApp.info("3) Tutti gli utenti della provincia di CZ che hanno effettuato almeno una sostituzione gomme");
+		newloggerApp
+				.info("3) Tutti gli utenti della provincia di CZ che hanno effettuato almeno una sostituzione gomme");
 		try {
 			query = prop.getProperty("query3").toString();
 			qm = new QueryMaker();
 			List<Utente> userList = qm.makeQueryUtente(query);
-			queryName = "reportUtente_2.xlsx";
-			rm.createUtenteReports(userList, queryName);
+			reportName = "reportUtente_2.xlsx";
+			rm.createUtenteReports(userList, reportName);
 		} catch (Exception e) {
 			newloggerApp.error(e.getMessage());
 		}
-		
+
 		newloggerApp.info("4) Tutti i meccanici che possiedono le officine migliori");
 		try {
 			query = prop.getProperty("query4").toString();
 			qm = new QueryMaker();
 			List<Utente> userList = qm.makeQueryUtente(query);
-			queryName = "reportUtente_3.xlsx";
-			rm.createUtenteReports(userList, queryName);
+			reportName = "reportUtente_3.xlsx";
+			rm.createUtenteReports(userList, reportName);
 		} catch (Exception e) {
 			newloggerApp.error(e.getMessage());
 		}
@@ -88,19 +95,19 @@ public class App implements Loggable {
 			query = prop.getProperty("query5").toString();
 			qm = new QueryMaker();
 			List<Utente> userList = qm.makeQueryUtente(query);
-			queryName = "reportUtente_4.xlsx";
-			rm.createUtenteReports(userList, queryName);	
+			reportName = "reportUtente_4.xlsx";
+			rm.createUtenteReports(userList, reportName);
 		} catch (Exception e) {
 			newloggerApp.error(e.getMessage());
 		}
-		
+
 		newloggerApp.info("6) I 2 utenti che hanno lasciato più recensioni negative");
 		try {
 			query = prop.getProperty("query6").toString();
 			qm = new QueryMaker();
 			List<Utente> userList = qm.makeQueryUtente(query);
-			queryName = "reportUtente_5.xlsx";
-			rm.createUtenteReports(userList, queryName);
+			reportName = "reportUtente_5.xlsx";
+			rm.createUtenteReports(userList, reportName);
 		} catch (Exception e) {
 			newloggerApp.error(e.getMessage());
 		}
@@ -111,8 +118,8 @@ public class App implements Loggable {
 			query = prop.getProperty("query7").toString();
 			qm = new QueryMaker();
 			List<Utente> userList = qm.makeQueryUtente(query);
-			queryName = "reportUtente_6.xlsx";
-			rm.createUtenteReports(userList, queryName);
+			reportName = "reportUtente_6.xlsx";
+			rm.createUtenteReports(userList, reportName);
 		} catch (Exception e) {
 			newloggerApp.error(e.getMessage());
 		}
@@ -120,7 +127,6 @@ public class App implements Loggable {
 
 	@Override
 	public Logger logging() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

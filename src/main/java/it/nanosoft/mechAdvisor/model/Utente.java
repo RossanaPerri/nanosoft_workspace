@@ -5,21 +5,37 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class Utente {
-	
+
 	private String nome;
 	private String cognome;
-	
+
+	/**
+	 * costruttore che crea un nuovo oggetto Utente a partire dal risultato di una
+	 * query
+	 * 
+	 * @param rs risultato di una query
+	 * @throws SQLException possibile errore di accesso al database o altri errori.
+	 */
 	public Utente(ResultSet rs) throws SQLException {
 		nome = rs.getString("nome");
 		cognome = rs.getString("cognome");
 	}
 
+	/**
+	 * costruttore di default
+	 */
 	public Utente() {
 		super();
 		this.nome = "";
 		this.cognome = "";
 	}
 
+	/**
+	 * costruttore che crea un nuovo oggetto Utente inzializzando il campo nome
+	 * 
+	 * @param nome    Stringa con cui si inzializza il campo nome
+	 * @param cognome Stringa con cui si inzializza il campo cognome
+	 */
 	public Utente(String nome, String cognome) {
 		super();
 		this.nome = nome;

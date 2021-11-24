@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
 import org.slf4j.Logger;
-
 import it.nanosoft.mechAdvisor.service.Loggable;
 
+/**
+ * Questa è la classe per la connesione al db in modalità singleton.
+ * 
+ * @author RossanaPerri
+ *
+ */
 public final class PostgreSqlConnection implements Loggable {
-	
+
 	private static PostgreSqlConnection instance;
 	private Connection connection;
 	String host = null;
@@ -57,11 +61,12 @@ public final class PostgreSqlConnection implements Loggable {
 	}
 
 	/**
-	 * Verifica se la connessione è stata già creata, altrimenti ne crea una nuova
-	 * In questo modo l'istanza viene create al primo tentativo di utilizzo e nelle
-	 * successive chiamate viene restituito il riferimento alla classe istanziata.
+	 * Verifica se la connessione è stata già creata o chiusa, altrimenti ne crea
+	 * una nuova
 	 * 
-	 * @throws SQLException
+	 * @return una una nuova istanza della classe al primo tentativo di utilizzo e
+	 *         nelle successive chiamate viene restituito il riferimento alla classe
+	 *         istanziata.
 	 */
 	public static PostgreSqlConnection getInstance() {
 		if (instance == null) {

@@ -2,7 +2,6 @@ package it.nanosoft.mechAdvisor.service;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -12,13 +11,29 @@ import org.slf4j.Logger;
 import it.nanosoft.mechAdvisor.model.Officina;
 import it.nanosoft.mechAdvisor.model.Utente;
 
+/**
+ * Questa classe gestisce la creazione di un report di risultati delle query
+ * eseguite
+ * 
+ * @author RossanaPerri
+ *
+ */
 public class ReportMaker implements Loggable {
 
+	/**
+	 * Costruttore di default
+	 */
 	public ReportMaker() {
 	}
 
-	public void createUtenteReports(List<Utente> userList, String queryName) throws SQLException {
-
+	/**
+	 * crea un report in formato xlsx che contiente i risultati di una query Utente
+	 * 
+	 * @param userList   lista di utenti che rappresentano il risultato di una query
+	 * @param reportName Stringa che rappresenta il nome da assegnare al report
+	 *                   creato
+	 */
+	public void createUtenteReports(List<Utente> userList, String reportName) {
 		try {
 			InputStream fis = ReportMaker.class.getResourceAsStream("/reportUtenteTemplate.xlsx");
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -28,14 +43,11 @@ public class ReportMaker implements Loggable {
 			int rownum = 1;
 			for (Utente user : userList) {
 				Row row = sh.createRow(rownum++);
-				createListUser(user, row);
+				createRowUser(user, row);
 			}
 
 			FileOutputStream out = new FileOutputStream(
-					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName)); // file
-																														// name
-																														// with
-																														// path
+					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(reportName));
 			wb.write(out);
 			out.close();
 			wb.close();
@@ -44,8 +56,13 @@ public class ReportMaker implements Loggable {
 		}
 	}
 
-	// creating cells for each row
-	private static void createListUser(Utente user, Row row) {
+	/**
+	 * crea una riga del file
+	 * 
+	 * @param user rappresenta l'utenza che verrà inserita sulla riga
+	 * @param row  riga del file che verrà valorizzata con le informazione di Utente
+	 */
+	private void createRowUser(Utente user, Row row) {
 		Cell cell = row.createCell(0);
 		cell.setCellValue(user.getNome());
 
@@ -53,8 +70,16 @@ public class ReportMaker implements Loggable {
 		cell.setCellValue(user.getCognome());
 	}
 
-	public void createOfficinaReports(List<Officina> officinaList, String queryName) throws SQLException {
-
+	/**
+	 * crea un report in formato xlsx che contiente i risultati di una query
+	 * Officina
+	 * 
+	 * @param officinaList lista di officine che rappresentano il risultato di una
+	 *                     query
+	 * @param reportName   Stringa che rappresenta il nome da assegnare al report
+	 *                     creato
+	 */
+	public void createOfficinaReports(List<Officina> officinaList, String reportName) {
 		try {
 			InputStream fis = ReportMaker.class.getResourceAsStream("/reportOfficinaTemplate.xlsx");
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -62,13 +87,13 @@ public class ReportMaker implements Loggable {
 			fis.close();
 
 			int rownum = 1;
-			for (Officina user : officinaList) {
+			for (Officina off : officinaList) {
 				Row row = sh.createRow(rownum++);
-				createListOfficna(user, row);
+				createRowOfficna(off, row);
 			}
 
 			FileOutputStream out = new FileOutputStream(
-					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName));
+					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(reportName));
 			wb.write(out);
 			out.close();
 			wb.close();
@@ -77,10 +102,16 @@ public class ReportMaker implements Loggable {
 		}
 	}
 
-	// creating cells for each row
-	private static void createListOfficna(Officina user, Row row) {
+	/**
+	 * crea una riga del file
+	 * 
+	 * @param off rappresenta l'officina che verrà inserita sulla riga
+	 * @param row riga del file che verrà valorizzata con le informazione di
+	 *            Officina
+	 */
+	private void createRowOfficna(Officina off, Row row) {
 		Cell cell = row.createCell(0);
-		cell.setCellValue(user.getNome());
+		cell.setCellValue(off.getNome());
 	}
 
 	@Override
