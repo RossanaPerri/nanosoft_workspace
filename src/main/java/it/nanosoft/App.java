@@ -44,17 +44,17 @@ public class App implements Loggable {
 				}
 			}});
 		
-		genericMenu.addMenuItem("8", "Esequi l'ottava query", new Runnable() {
+		genericMenu.addMenuItem("9", "Esequi la nona query", new Runnable() {
 			public void run() {
 				String query = null;
 				Properties prop = new Properties();
 				try {
 					prop.load(App.class.getClassLoader().getResourceAsStream("query.list"));
-					query = prop.getProperty("query8").toString();
+					query = prop.getProperty("query9").toString();
 					QueryMaker qm = new QueryMaker();
-					List<Officina> officinaList = qm.makeQueryOfficina(query);	
+					List<Officina> officinaList = qm.makeQueryOfficina2(query);	
 					ReportMaker rm = new ReportMaker();
-					rm.createOfficinaReports(officinaList, "reportOfficina_8.xlsx");
+					rm.createOfficinaReports(officinaList, "reportOfficina_9.xlsx");
 					qm.closeMaker();
 				} catch (Exception e) {
 					newloggerApp.error(e.getMessage());

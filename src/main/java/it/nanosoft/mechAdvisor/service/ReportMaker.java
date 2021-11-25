@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 
 import it.nanosoft.mechAdvisor.model.Officina;
+import it.nanosoft.mechAdvisor.model.Recensione;
 import it.nanosoft.mechAdvisor.model.Utente;
 
 
@@ -70,33 +71,8 @@ public class ReportMaker implements Loggable {
 			XSSFSheet sh = wb.getSheetAt(0);
 			fis.close();
 
-			List<Officina> officine = new ArrayList<Officina>();
-
-			officine.addAll(officinaList);
-
-			HashSet<Object> seen = new HashSet<>();
-			officine.removeIf(e -> !seen.add(e.getNome()));
-
-			for (Officina off : officine) {
-				double voto = 0.0;
-				int count = 0;
-				double votoMedio = 0.0;
-				for (Officina off1 : officinaList) {
-					if (off.equals(off1)) {
-						voto += off1.getVoto();
-						count++;
-					}
-				}
-				if (count != 0) {
-					votoMedio = voto / count;
-				}
-				
-			off.setVoto(votoMedio);
-
-			}
-
 			int rownum = 1;
-			for (Officina off : officine) {
+			for (Officina off : officinaList) {
 				Row row = sh.createRow(rownum++);
 				createListOfficna(off, row);
 			}
@@ -116,7 +92,7 @@ public class ReportMaker implements Loggable {
 		Cell cell = row.createCell(0);
 		cell.setCellValue(off.getNome());
 		cell = row.createCell(1);
-		cell.setCellValue(off.getVoto());
+		cell.setCellValue(off.getVotoMedio());
 
 	}
 

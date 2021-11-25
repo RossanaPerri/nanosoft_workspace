@@ -67,6 +67,30 @@ public class QueryMaker implements Loggable {
 		return listToReturn;
 	}
 	
+	public List<Officina> makeQueryOfficina2(String query) {
+			List<Officina> listToReturn = new ArrayList<Officina>();
+			try {
+				conn = PostgreSqlConnection.getInstance();
+				stmt = conn.getConnection().createStatement();
+				rs = stmt.executeQuery(query);
+				while (rs.next()) {
+					Officina officinaToAdd = new Officina(rs);
+					for(Officina o: listToReturn) {
+						if(o.equals(officinaToAdd)) {
+							Recensione recensione = new Recensione(rs.getString("id"), rs.getDouble("voto"));
+							o.aggiungiRecensione(recensione);
+						}
+					}
+					if(!listToReturn.contains(officinaToAdd))
+					listToReturn.add(officinaToAdd);
+				}
+			} catch (SQLException e) {
+				newloggerApp.error(" ---- : ", e);
+			}
+			return listToReturn;
+		}
+	
+	
 
 	@Override
 	public Logger logging() {
