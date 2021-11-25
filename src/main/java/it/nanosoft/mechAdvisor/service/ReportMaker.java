@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,7 +16,15 @@ import org.slf4j.Logger;
 import it.nanosoft.mechAdvisor.model.Officina;
 import it.nanosoft.mechAdvisor.model.Utente;
 
+
+/**
+ * Classe per la creazione ed il salvataggio dei report su file xlsx.
+ * @author emicovi
+ */
+
 public class ReportMaker implements Loggable {
+	
+	
 
 	public ReportMaker() {
 	}
@@ -63,7 +70,7 @@ public class ReportMaker implements Loggable {
 			XSSFSheet sh = wb.getSheetAt(0);
 			fis.close();
 
-			List<Officina> officine = new ArrayList();
+			List<Officina> officine = new ArrayList<Officina>();
 
 			officine.addAll(officinaList);
 
@@ -95,10 +102,7 @@ public class ReportMaker implements Loggable {
 			}
 
 			FileOutputStream out = new FileOutputStream(
-					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName)); // file
-																														// name
-																														// with
-																														// path
+			System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(queryName)); 
 			wb.write(out);
 			out.close();
 			wb.close();
