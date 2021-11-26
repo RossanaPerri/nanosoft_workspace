@@ -11,15 +11,13 @@ public class Officina {
 	
 	private String nome;
 	private List<Recensione> recensioni;
-	private Recensione recensione;
 	
 
 
 	public Officina(ResultSet rs) throws SQLException {
 		nome = rs.getString("nome");
 		recensioni = new ArrayList<Recensione>();
-		recensione = new Recensione(rs.getString("id"), rs.getDouble("voto"));
-		aggiungiRecensione(recensione);
+		
 	}
 	
 	

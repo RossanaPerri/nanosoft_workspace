@@ -1,6 +1,9 @@
 package it.nanosoft;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+
+import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 
@@ -8,6 +11,7 @@ import it.nanosoft.mechAdvisor.menu.GenericMenu;
 import it.nanosoft.mechAdvisor.model.Officina;
 import it.nanosoft.mechAdvisor.model.Utente;
 import it.nanosoft.mechAdvisor.service.Loggable;
+import it.nanosoft.mechAdvisor.service.MailWithAttachmentService;
 import it.nanosoft.mechAdvisor.service.QueryMaker;
 import it.nanosoft.mechAdvisor.service.ReportMaker;
 
@@ -19,9 +23,13 @@ import it.nanosoft.mechAdvisor.service.ReportMaker;
  */
 
 public class App implements Loggable {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MessagingException, IOException {
 
 		GenericMenu genericMenu = new GenericMenu();
+		
+		MailWithAttachmentService mail = new  MailWithAttachmentService("covelliemanuel@gmail.com", "jlgpjkgrebazpkcp", "smtp.gmail.com", 587);
+		
+		mail.sendMail(mail.getSession());
 		
 		
 
