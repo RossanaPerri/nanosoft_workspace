@@ -11,3 +11,5 @@ query5=select u.email, a.nome, a.cognome from mech.utente u, mech.anagrafica a, 
 query6=select a.nome, a.cognome, count(*) as c from mech.utente u, mech.anagrafica a, mech.recensioni r, mech.voto v where r.email_utente = u.email and u.email = a.email_utente and r.id_voto = v.id and v.voto < 6 group by a.nome, a.cognome, u.email order by c desc limit 2
 
 query7=select distinct a.nome, a.cognome from mech.utente u, mech.propieta_veicolo pv, mech.veicolo v, mech.voto v2, mech.officina o, mech.recensioni r, mech.anagrafica a where u.email =  a.email_utente and o.email_utente = u.email and u.email = pv.email_utente and pv.id_veicolo = v.id and r.email_utente = u.email and r.id_veicolo = v.id and r.id_voto = v2.id and v2.voto < 6 and o.provincia = 'Cosenza' and v.tipologia = 'moto'
+
+query8=select o.nome, o.provincia, v.voto, r.titolo, r.id from mech.officina o, mech.recensioni r, mech.voto v where o.id = r.id_officina and r.id_voto = v.id and v.voto notnull

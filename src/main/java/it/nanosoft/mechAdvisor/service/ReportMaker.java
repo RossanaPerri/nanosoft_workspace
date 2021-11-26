@@ -45,7 +45,7 @@ public class ReportMaker implements Loggable {
 				Row row = sh.createRow(rownum++);
 				createRowUser(user, row);
 			}
-
+			
 			FileOutputStream out = new FileOutputStream(
 					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(reportName));
 			wb.write(out);
@@ -91,7 +91,6 @@ public class ReportMaker implements Loggable {
 				Row row = sh.createRow(rownum++);
 				createRowOfficna(off, row);
 			}
-
 			FileOutputStream out = new FileOutputStream(
 					System.getProperty("user.home").concat(System.getProperty("file.separator")).concat(reportName));
 			wb.write(out);
@@ -102,16 +101,15 @@ public class ReportMaker implements Loggable {
 		}
 	}
 
-	/**
-	 * crea una riga del file
-	 * 
-	 * @param off rappresenta l'officina che verrà inserita sulla riga
-	 * @param row riga del file che verrà valorizzata con le informazione di
-	 *            Officina
-	 */
 	private void createRowOfficna(Officina off, Row row) {
 		Cell cell = row.createCell(0);
 		cell.setCellValue(off.getNome());
+
+		cell = row.createCell(1);
+		cell.setCellValue(off.getProvincia());
+
+		cell = row.createCell(2);
+		cell.setCellValue(off.calcolaVotoMedio());
 	}
 
 	@Override

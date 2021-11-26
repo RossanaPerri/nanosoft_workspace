@@ -1,0 +1,97 @@
+#Query che seleziona tutte le officine recensite e il voto corrispondente per ogni recensione ricevuta
+select
+	o.nome,
+	v.voto
+from
+	officina o,
+	recensioni r,
+	voto v
+where
+	o.id = r.id_officina
+	and r.id_voto = v.id
+	and
+v.voto notnull
+
+#Aggiungi recensioni
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (16, 2, 1, 'a1', 'giulia.verdi@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (17, 1, 7, 'a4', 'marco.rossi@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (18, 3, 12, 'a6', 'simone.cuda@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (19, 4, 12, 'a9', 'terry.star@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (20, 4, 12, 'a8', 'marco.rossi@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (21, 3, 7, 'a4', 'vasco.rossi@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (22, 2, 7, 'a4', 'vasco.rossi@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (23, 1, 7, 'a1', 'simone.cuda@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (24, 3, 7, 'a2', 'vasco.rossi@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (25, 2, 7, 'a3', 'marco.rossi@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (26, 2, 8, 'a4', 'vasco.rossi@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (27, 4, 11, 'a6', 'simone.cuda@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (28, 2, 10, 'a9', 'vasco.rossi@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (29, 1, 11, 'a6', 'marco.rossi@libero.it');
+
+#Aggiungi Utente
+insert into utente values
+	('ibra.z11@gmail.it', 'ZI_11', 'sdfj6ni');
+insert into utente values
+	('ron.blu@libero.it', 'Ronnable', 'gnuo444jl');
+insert into utente values
+	('serena.fv@gmail.it', 'SeFA', 'hdbuis4');
+insert into utente values
+	('mirko.falvo@libero.it', 'Mirk', 'nnn55dr');
+	
+#Aggiungi anagrafica
+insert into anagrafica (nome, cognome, luogo_nascita, codicefiscale, provincia, comune, email_utente)
+	values ('Zlatan', 'Ibra', 'Svezia', 'ZLTIBR76U58M9840', 'cosenza', 'cosenza', 'ibra.z11@gmail.it');
+insert into anagrafica (nome, cognome, luogo_nascita, codicefiscale, provincia, comune, email_utente)
+	values ('Ronaldo', 'Blu', 'Portogallo', 'CRNRNL76U58M5840', 'catanzaro', 'catanzaro', 'ron.blu@libero.it');
+insert into anagrafica (nome, cognome, luogo_nascita, codicefiscale, provincia, comune, email_utente)
+	values ('Serena', 'Favina', 'Italia', 'SRNFVN76U58M9840', 'cosenza', 'cosenza', 'serena.fv@gmail.it');
+insert into anagrafica (nome, cognome, luogo_nascita, codicefiscale, provincia, comune, email_utente)
+	values ('Mirko', 'Falvo', 'Italia', 'MRJFLV76U58M9Y40', 'catanzaro', 'catanzaro', 'mirko.falvo@libero.it');
+	
+#Aggiungi recensioni
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (30, 2, 11, 'a1', 'mirko.falvo@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (31, 1, 1, 'a4', 'serena.fv@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (32, 3, 2, 'a6', 'ron.blu@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (33, 4, 3, 'a9', 'mirko.falvo@libero.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (34, 4, 4, 'a8', 'serena.fv@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (35, 3, 6, 'a4', 'vasco.rossi@gmail.it');
+insert into recensioni (id, id_veicolo, id_officina, id_voto, email_utente) 
+	values (36, 2, 5, 'a9', 'ibra.z11@gmail.it');
+	
+#Aggiungi officine
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (13, 'Officina13', 'cosenza', 8, 'ibra.z11@gmail.it');
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (14, 'Officina14', 'catanzaro', 6, 'serena.fv@gmail.it');
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (15, 'Officina15', 'cosenza', 5, 'mirko.falvo@libero.it');
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (16, 'Officina16', 'catanzaro', 7, 'ron.blu@libero.it');
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (17, 'Officina17', 'cosenza', 6, 'ibra.z11@gmail.it');
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (18, 'Officina18', 'catanzaro', 9, 'serena.fv@gmail.it');
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (19, 'Officina19', 'cosenza', 7, 'mirko.falvo@libero.it');
+insert into officina (id, nome, provincia, votomedio, email_utente)
+	values (20, 'Officina20', 'catanzaro', 4, 'ron.blu@libero.it');
