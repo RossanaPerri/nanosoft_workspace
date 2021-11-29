@@ -141,7 +141,7 @@ public class EmailSender implements Loggable {
 			transport.sendMessage(msg, msg.getAllRecipients());
 			transport.close();
 
-			newloggerApp.info("Invio dell'email Terminato con successo.");
+			newloggerApp.info("Invio dell'email Terminato con successo.\n");
 
 		} catch (AddressException ae) {
 			newloggerApp.error(" ---- : ", ae);

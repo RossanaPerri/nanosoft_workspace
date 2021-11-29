@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import it.nanosoft.mechAdvisor.model.Officina;
 import it.nanosoft.mechAdvisor.model.Utente;
+import it.nanosoft.mechAdvisor.util.Costanti;
 
 /**
  * Questa classe gestisce la creazione di un report di risultati delle query
@@ -18,7 +19,7 @@ import it.nanosoft.mechAdvisor.model.Utente;
  * @author RossanaPerri
  *
  */
-public class ReportMaker implements Loggable {
+public class ReportMaker implements Loggable, Costanti {
 
 	/**
 	 * Costruttore di default
@@ -35,7 +36,7 @@ public class ReportMaker implements Loggable {
 	 */
 	public void createUtenteReports(List<Utente> userList, String reportName) {
 		try {
-			InputStream fis = ReportMaker.class.getResourceAsStream("/reportUtenteTemplate.xlsx");
+			InputStream fis = ReportMaker.class.getResourceAsStream(TAMPLETE_REPORT_UTENTE_EXCEL);
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sh = wb.getSheetAt(0);
 			fis.close();
@@ -81,7 +82,7 @@ public class ReportMaker implements Loggable {
 	 */
 	public void createOfficinaReports(List<Officina> officinaList, String reportName) {
 		try {
-			InputStream fis = ReportMaker.class.getResourceAsStream("/reportOfficinaTemplate.xlsx");
+			InputStream fis = ReportMaker.class.getResourceAsStream(TAMPLETE_REPORT_OFFICINA_EXCEL);
 			XSSFWorkbook wb = new XSSFWorkbook(fis);
 			XSSFSheet sh = wb.getSheetAt(0);
 			fis.close();

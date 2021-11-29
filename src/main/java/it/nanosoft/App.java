@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Properties;
 import org.slf4j.Logger;
 import it.nanosoft.mechAdvisor.model.Officina;
-import it.nanosoft.mechAdvisor.model.Recensione;
 import it.nanosoft.mechAdvisor.model.Utente;
 import it.nanosoft.mechAdvisor.service.EmailSender;
 import it.nanosoft.mechAdvisor.service.Loggable;
@@ -20,31 +19,32 @@ import it.nanosoft.mechAdvisor.util.Costanti;
  *
  */
 public class App implements Loggable, Costanti {
+	
+	private static QueryMaker qm;
+	private static ReportMaker rm = new ReportMaker();
+	private static Properties prop = new Properties();
+	private static EmailSender emailSender = new EmailSender();
+	private static String query;
+	
 	/**
 	 * carica le istruzioni sql dal file "query.list"
 	 * 
 	 * @return un oggetto Properties che contiente l'insieme delle chiavi il cui
 	 *         valore corrisponde all'istruzione sql da eseguire
 	 */
-	private static Properties leggiQuery() {
-		Properties prop = new Properties();
+	private static void leggiQuery() {
 		try {
 			newloggerApp.info("Sto caricando il file " + "\"FILE_QUERY_LIST\"");
 			prop.load(App.class.getClassLoader().getResourceAsStream(FILE_QUERY_LIST));
 		} catch (IOException e) {
 			newloggerApp.error(" ---- Impossibile caricare il file " + "\"FILE_QUERY_LIST\": ", e);
 		}
-		return prop;
 	}
-
+	
 	public static void main(String[] args) {
 		
-		QueryMaker qm;
-		ReportMaker rm = new ReportMaker();
-		Properties prop = leggiQuery();
-		EmailSender emailSender = new EmailSender();
-		String query = null;
-
+		leggiQuery();
+	
 		newloggerApp.info(
 				"1) Tutti gli utenti che hanno cambiato auto negli ultimi 2 anni la cui auto primaria era un AUDI");
 		try {
